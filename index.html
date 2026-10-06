@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#122051">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MMHSJC Early Exit">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-64.png">
+<title>MMHSJC Early Exit</title>
+<style>
+:root{--navy:#122051;--gold:#ffc900;--bg:#f4f6fa;--text:#172033;--muted:#68738a;--card:#fff;--danger:#b42318;--ok:#087443}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px #0002}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:48px;height:48px;object-fit:contain}.brand h1{font-size:18px;margin:0}.brand small{opacity:.8}
+main{max-width:720px;margin:auto;padding:16px 14px 32px}.card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 3px 14px #15254a10}
+h2{font-size:17px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px}
+input,select,textarea{width:100%;border:1px solid #d9deea;border-radius:12px;padding:13px 12px;font-size:16px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px #12205112}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+.btn{border:0;border-radius:13px;padding:13px 15px;font-weight:700;font-size:15px;cursor:pointer;width:100%}
+.primary{background:var(--navy);color:#fff}.gold{background:var(--gold);color:#111}.whatsapp{background:#25D366;color:#fff}.secondary{background:#eef1f7;color:var(--navy)}
+.btn:disabled{opacity:.55;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.student{border:1px solid #e1e5ee;border-radius:14px;padding:12px;margin-top:8px;cursor:pointer}.student:active{background:#f3f5fa}
+.student strong{display:block}.student span{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef1f7;color:var(--navy);font-size:12px;margin-top:5px}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:9px}.detail div{background:#f6f7fa;border-radius:10px;padding:9px}.detail b{display:block;font-size:11px;color:var(--muted);text-transform:uppercase}.detail span{font-size:14px}
+.alert{padding:11px 12px;border-radius:12px;margin:8px 0;font-size:14px}.error{background:#fff0ee;color:var(--danger)}.success{background:#eaf8f1;color:var(--ok)}
+.hidden{display:none!important}.top-actions{display:flex;gap:8px;margin-top:10px}.top-actions button{width:auto}
+.exit-item{border-bottom:1px solid #edf0f5;padding:11px 0}.exit-item:last-child{border:0}.exit-item strong{display:block}.exit-item small{color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:12px}
+@media(max-width:430px){.row,.detail,.actions{grid-template-columns:1fr}.brand h1{font-size:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <img src="icon-180.png" alt="MMHSJC">
+    <div><h1>MMHSJC Early Exit</h1><small>Student Early Exit Management</small></div>
+  </div>
+</header>
+
+<main>
+<section id="loginCard" class="card">
+  <h2>Staff Login</h2>
+  <p class="muted">Enter your staff PIN to continue.</p>
+  <input id="pin" type="password" inputmode="numeric" placeholder="Staff PIN" autocomplete="current-password">
+  <div id="loginMsg"></div>
+  <button class="btn primary" style="margin-top:10px" onclick="login()">LOGIN</button>
+</section>
+
+<section id="app" class="hidden">
+  <div class="card">
+    <h2>Find Student</h2>
+    <div class="row">
+      <input id="search" class="full" placeholder="Name / Scholar No. / Roll No." oninput="filterStudents()">
+      <select id="classFilter" onchange="filterStudents()"><option value="">All Classes</option></select>
+    </div>
+    <div id="studentResults"></div>
+  </div>
+
+  <div id="selectedCard" class="card hidden">
+    <h2>Selected Student</h2>
+    <div id="studentDetails" class="detail"></div>
+    <div class="top-actions"><button class="btn secondary" onclick="clearStudent()">Change Student</button></div>
+  </div>
+
+  <div id="exitCard" class="card hidden">
+    <h2>Early Exit Details</h2>
+    <div class="row">
+      <div><label class="muted">Person Taking Student</label><input id="takingPerson" placeholder="Full name"></div>
+      <div><label class="muted">Relation</label><select id="relation"></select></div>
+      <div><label class="muted">Reason</label><select id="reason"></select></div>
+      <div><label class="muted">Remarks</label><input id="remarks" placeholder="Optional"></div>
+      <div class="full"><label class="muted">Staff Name</label><input id="staff" placeholder="Teacher / Staff name"></div>
+    </div>
+    <div id="saveMsg"></div>
+    <button id="saveBtn" class="btn gold" style="margin-top:12px" onclick="saveExit()">SAVE & OPEN WHATSAPP</button>
+  </div>
+
+  <div class="card">
+    <h2>Today's Early Exits</h2>
+    <div id="todayList" class="muted">Loading...</div>
+  </div>
+
+  <button class="btn secondary" onclick="logout()">LOGOUT</button>
+</section>
+</main>
+<footer>Mary Matha High School & Jr. College • MMHSJC</footer>
+
+<script>
+const CONFIG = {
+  // Put your deployed Google Apps Script Web App URL here.
+  API_URL: "https://script.google.com/macros/s/AKfycbySxQaiEbHCSK3Ocdxku2K2-NzdB85O5bNtKlVtrMl4O7cow1UI4A7hx4I2tX0SAKS6/exec"
+};
+let PIN="", students=[], selected=null, lists={relations:[],reasons:[]};
+
+function api(action, params={}) {
+  return new Promise((resolve,reject)=>{
+    if(!CONFIG.API_URL || CONFIG.API_URL.includes("PASTE_")) return reject(new Error("Configure API_URL in app.js"));
+    const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const s=document.createElement("script");
+    const q=new URLSearchParams({action,pin:PIN,callback:cb,...params});
+    s.src=CONFIG.API_URL+"?"+q.toString();
+    window[cb]=(data)=>{delete window[cb];s.remove();data.ok?resolve(data):reject(new Error(data.error||"Request failed"))};
+    s.onerror=()=>{delete window[cb];s.remove();reject(new Error("Could not connect to the school server."))};
+    document.body.appendChild(s);
+  });
+}
+async function login(){
+  PIN=document.getElementById("pin").value.trim();
+  if(!PIN){msg("loginMsg","Enter PIN.","error");return}
+  try{
+    const d=await api("bootstrap");
+    students=d.students||[];lists=d.lists||{};
+    fillLists();fillClasses();document.getElementById("loginCard").classList.add("hidden");document.getElementById("app").classList.remove("hidden");
+    filterStudents();loadToday();
+    sessionStorage.setItem("mmhs_pin",PIN);
+  }catch(e){msg("loginMsg",e.message,"error")}
+}
+function fillLists(){
+  const r=document.getElementById("relation"),rs=document.getElementById("reason");
+  r.innerHTML='<option value="">Select relation</option>'+lists.relations.map(x=>`<option>${esc(x)}</option>`).join("");
+  rs.innerHTML='<option value="">Select reason</option>'+lists.reasons.map(x=>`<option>${esc(x)}</option>`).join("");
+}
+function fillClasses(){
+  const c=document.getElementById("classFilter"), vals=[...new Set(students.map(s=>s.classDivision).filter(Boolean))].sort();
+  c.innerHTML='<option value="">All Classes</option>'+vals.map(x=>`<option>${esc(x)}</option>`).join("");
+}
+function filterStudents(){
+  const q=document.getElementById("search").value.trim().toLowerCase(), cl=document.getElementById("classFilter").value;
+  const arr=students.filter(s=>(!cl||s.classDivision===cl)&&(!q||[s.name,s.scholarNo,s.rollNo,s.classDivision].join(" ").toLowerCase().includes(q))).slice(0,30);
+  document.getElementById("studentResults").innerHTML=arr.length?arr.map((s,i)=>`<div class="student" onclick="selectStudent(${students.indexOf(s)})"><strong>${esc(s.name)}</strong><span>Scholar: ${esc(s.scholarNo)} • Roll: ${esc(s.rollNo)} • ${esc(s.classDivision)}</span></div>`).join(""):'<p class="muted">No matching student.</p>';
+}
+function selectStudent(i){
+  selected=students[i];
+  document.getElementById("studentDetails").innerHTML=`
+    <div><b>Student</b><span>${esc(selected.name)}</span></div>
+    <div><b>Class</b><span>${esc(selected.classDivision)}</span></div>
+    <div><b>Scholar No.</b><span>${esc(selected.scholarNo)}</span></div>
+    <div><b>Roll No.</b><span>${esc(selected.rollNo)}</span></div>
+    <div><b>Parent</b><span>${esc(selected.parentName)}</span></div>
+    <div><b>Mobile</b><span>${esc(selected.parentMobile)}</span></div>`;
+  document.getElementById("selectedCard").classList.remove("hidden");document.getElementById("exitCard").classList.remove("hidden");
+  document.getElementById("selectedCard").scrollIntoView({behavior:"smooth"});
+}
+function clearStudent(){selected=null;document.getElementById("selectedCard").classList.add("hidden");document.getElementById("exitCard").classList.add("hidden")}
+async function saveExit(){
+  if(!selected)return msg("saveMsg","Select a student first.","error");
+  const taking=document.getElementById("takingPerson").value.trim(), relation=document.getElementById("relation").value, reason=document.getElementById("reason").value, remarks=document.getElementById("remarks").value.trim(), staff=document.getElementById("staff").value.trim();
+  if(!taking||!relation||!reason||!staff)return msg("saveMsg","Please complete Person, Relation, Reason and Staff Name.","error");
+  const btn=document.getElementById("saveBtn");btn.disabled=true;btn.textContent="SAVING...";
+  try{
+    const payload={student:selected,takingPerson:taking,relation,reason,remarks,staff};
+    const d=await api("saveExit",{payload:JSON.stringify(payload)});
+    msg("saveMsg","✓ Early exit saved. Opening WhatsApp...","success");
+    if(d.whatsappUrl) window.location.href=d.whatsappUrl;
+    await loadToday();
+    document.getElementById("takingPerson").value="";document.getElementById("remarks").value="";
+  }catch(e){msg("saveMsg",e.message,"error")}
+  finally{btn.disabled=false;btn.textContent="SAVE & OPEN WHATSAPP"}
+}
+async function loadToday(){
+  try{const d=await api("today");const a=d.exits||[];document.getElementById("todayList").innerHTML=a.length?a.slice(0,30).map(x=>`<div class="exit-item"><strong>${esc(x.studentName)} <span class="pill">${esc(x.classDivision)}</span></strong><small>${esc(x.time)} • ${esc(x.reason)} • Taken by ${esc(x.takingPerson)}</small></div>`).join(""):'No exits recorded today.'}catch(e){document.getElementById("todayList").textContent=e.message}
+}
+function logout(){sessionStorage.removeItem("mmhs_pin");PIN="";location.reload()}
+function msg(id,t,type){document.getElementById(id).innerHTML=`<div class="alert ${type}">${esc(t)}</div>`}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+window.addEventListener("load",()=>{const p=sessionStorage.getItem("mmhs_pin");if(p){document.getElementById("pin").value=p;login()}});
+if("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+</script>
+</body>
+</html>
