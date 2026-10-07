@@ -12,18 +12,23 @@
 <link rel="icon" href="icon-64.png">
 <title>MMHSJC Early Exit</title>
 <style>
-:root{--navy:#122051;--gold:#ffc900;--bg:#f4f6fa;--text:#172033;--muted:#68738a;--card:#fff;--danger:#b42318;--ok:#087443}
+:root{--navy:#122051;--gold:#ffc900;--bg:#f4f6fa;--text:#172033;--muted:#68738a;--card:#fff;--danger:#b42318;--ok:#087443;--blue:#1677d2;--green:#159447;--purple:#6642b7}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header{background:var(--navy);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px #0002}
+header{background:var(--navy);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px #0002}
 .brand{display:flex;align-items:center;gap:12px}.brand img{width:48px;height:48px;object-fit:contain}.brand h1{font-size:18px;margin:0}.brand small{opacity:.8}
-main{max-width:720px;margin:auto;padding:16px 14px 32px}.card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 3px 14px #15254a10}
-h2{font-size:17px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px}.header-row{display:flex;align-items:center}
+main{max-width:1100px;margin:auto;padding:14px 14px 34px}.card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 3px 14px #15254a10}
+h2{font-size:18px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px}
 input,select,textarea{width:100%;border:1px solid #d9deea;border-radius:12px;padding:13px 12px;font-size:16px;background:#fff;outline:none}
 input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px #12205112}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
 .btn{border:0;border-radius:13px;padding:13px 15px;font-weight:700;font-size:15px;cursor:pointer;width:100%}
 .primary{background:var(--navy);color:#fff}.gold{background:var(--gold);color:#111}.whatsapp{background:#25D366;color:#fff}.secondary{background:#eef1f7;color:var(--navy)}
-.btn:disabled{opacity:.55;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.topnav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;position:sticky;top:72px;z-index:15;background:var(--bg);padding:8px 0}
+.navbtn{background:#fff;border:1px solid #dce2ee;color:var(--navy);border-radius:13px;padding:12px 8px;font-weight:800;cursor:pointer;font-size:14px}
+.navbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.navbtn span{display:block;font-size:21px;margin-bottom:2px}
 .student{border:1px solid #e1e5ee;border-radius:14px;padding:12px;margin-top:8px;cursor:pointer}.student:active{background:#f3f5fa}
 .student strong{display:block}.student span{font-size:12px;color:var(--muted)}
 .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef1f7;color:var(--navy);font-size:12px;margin-top:5px}
@@ -31,15 +36,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 
 .alert{padding:11px 12px;border-radius:12px;margin:8px 0;font-size:14px}.error{background:#fff0ee;color:var(--danger)}.success{background:#eaf8f1;color:var(--ok)}
 .hidden{display:none!important}.top-actions{display:flex;gap:8px;margin-top:10px}.top-actions button{width:auto}
 .exit-item{border-bottom:1px solid #edf0f5;padding:11px 0}.exit-item:last-child{border:0}.exit-item strong{display:block}.exit-item small{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.stat{background:#f6f7fa;border-radius:13px;padding:13px}.stat b{display:block;font-size:24px;color:var(--navy)}.stat span{font-size:12px;color:var(--muted)}
+.table-wrap{overflow:auto;border:1px solid #e1e5ee;border-radius:12px}.history-table{width:100%;border-collapse:collapse;min-width:900px;background:#fff}.history-table th,.history-table td{padding:9px 10px;border-bottom:1px solid #edf0f5;text-align:left;font-size:13px}.history-table th{background:#f3f5fa;color:var(--navy);position:sticky;top:0}
+.filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:12px}
-@media(max-width:430px){.row,.detail,.actions{grid-template-columns:1fr}.brand h1{font-size:16px}}
+@media(max-width:700px){.row,.detail,.filter-grid,.stats,.actions{grid-template-columns:1fr}.topnav{top:70px}.navbtn{font-size:12px;padding:9px 4px}.navbtn span{font-size:18px}.brand h1{font-size:16px}.brand small{font-size:11px}.header-right .welcome{display:none}}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">
-    <img src="icon-180.png" alt="MMHSJC">
-    <div><h1>MMHSJC Early Exit</h1><small>Student Early Exit Management</small></div>
+  <div class="header-row">
+    <div class="brand">
+      <img src="icon-180.png" alt="MMHSJC">
+      <div><h1>MMHSJC Early Exit</h1><small>Student Early Exit Management</small></div>
+    </div>
+    <div class="header-right"><span class="welcome" id="welcome"></span><button class="btn secondary" style="width:auto" onclick="logout()">LOGOUT</button></div>
   </div>
 </header>
 
@@ -53,124 +64,212 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:12px}
 </section>
 
 <section id="app" class="hidden">
-  <div class="card">
-    <h2>Find Student</h2>
-    <div class="row">
-      <input id="search" class="full" placeholder="Name / Scholar No. / Roll No." oninput="filterStudents()">
-      <select id="classFilter" onchange="filterStudents()"><option value="">All Classes</option></select>
+  <nav class="topnav">
+    <button id="navFind" class="navbtn active" onclick="showSection('find')"><span>🔎</span>Find Student</button>
+    <button id="navToday" class="navbtn" onclick="showSection('today')"><span>👥</span>Today's Early Exit</button>
+    <button id="navHistory" class="navbtn" onclick="showSection('history')"><span>📄</span>History</button>
+  </nav>
+
+  <section id="findSection">
+    <div class="card">
+      <h2>Find Student</h2>
+      <div class="row">
+        <input id="search" class="full" placeholder="Name / Scholar No. / Roll No." oninput="filterStudents()">
+        <select id="classFilter" onchange="filterStudents()"><option value="">All Classes</option></select>
+      </div>
+      <div id="studentResults"></div>
     </div>
-    <div id="studentResults"></div>
-  </div>
 
-  <div id="selectedCard" class="card hidden">
-    <h2>Selected Student</h2>
-    <div id="studentDetails" class="detail"></div>
-    <div class="top-actions"><button class="btn secondary" onclick="clearStudent()">Change Student</button></div>
-  </div>
-
-  <div id="exitCard" class="card hidden">
-    <h2>Early Exit Details</h2>
-    <div class="row">
-      <div><label class="muted">Person Taking Student</label><input id="takingPerson" placeholder="Full name"></div>
-      <div><label class="muted">Relation</label><select id="relation"></select></div>
-      <div><label class="muted">Reason</label><select id="reason"></select></div>
-      <div><label class="muted">Remarks</label><input id="remarks" placeholder="Optional"></div>
-      <div class="full"><label class="muted">Staff Name</label><input id="staff" placeholder="Teacher / Staff name"></div>
+    <div id="selectedCard" class="card hidden">
+      <h2>Selected Student</h2>
+      <div id="studentDetails" class="detail"></div>
+      <div class="top-actions"><button class="btn secondary" onclick="clearStudent()">Change Student</button></div>
     </div>
-    <div id="saveMsg"></div>
-    <button id="saveBtn" class="btn gold" style="margin-top:12px" onclick="saveExit()">SAVE & OPEN WHATSAPP</button>
-  </div>
 
-  <div class="card">
-    <h2>Today's Early Exits</h2>
-    <div id="todayList" class="muted">Loading...</div>
-  </div>
+    <div id="exitCard" class="card hidden">
+      <h2>Early Exit Details</h2>
+      <div class="row">
+        <div><label class="muted">Person Taking Student</label><input id="takingPerson" placeholder="Full name" onblur="this.value=this.value.toUpperCase()"></div>
+        <div><label class="muted">Relation</label><select id="relation"></select></div>
+        <div><label class="muted">Reason</label><select id="reason"></select></div>
+        <div><label class="muted">Remarks</label><input id="remarks" placeholder="Optional"></div>
+        <div class="full"><label class="muted">Staff Name</label><input id="staff" placeholder="Teacher / Staff name"></div>
+      </div>
+      <div id="saveMsg"></div>
+      <button id="saveBtn" class="btn gold" style="margin-top:12px" onclick="saveExit()">SAVE & OPEN WHATSAPP</button>
+    </div>
+  </section>
 
-  <button class="btn secondary" onclick="logout()">LOGOUT</button>
+  <section id="todaySection" class="hidden">
+    <div class="card">
+      <h2>Today's Early Exit</h2>
+      <div id="todayStats" class="stats"></div>
+      <div id="todayList">Loading...</div>
+    </div>
+  </section>
+
+  <section id="historySection" class="hidden">
+    <div class="card">
+      <h2>History & Downloads</h2>
+      <p class="muted">Select a date range and filters, then download or print the records.</p>
+      <div class="filter-grid">
+        <div><label class="muted">From Date</label><input id="fromDate" type="date"></div>
+        <div><label class="muted">To Date</label><input id="toDate" type="date"></div>
+        <div><label class="muted">Class/Division</label><select id="historyClass"><option value="">All Classes</option></select></div>
+        <div><label class="muted">Staff</label><select id="historyStaff"><option value="">All Staff</option></select></div>
+        <div><label class="muted">Reason</label><select id="historyReason"><option value="">All Reasons</option></select></div>
+        <div><label class="muted">Search</label><input id="historySearch" placeholder="Student / scholar / roll..."></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="loadHistory()">SEARCH HISTORY</button>
+        <button class="btn whatsapp" onclick="downloadExcel()">DOWNLOAD EXCEL</button>
+        <button class="btn secondary" onclick="printHistory()">DOWNLOAD / PRINT PDF</button>
+      </div>
+      <div id="historyMsg"></div>
+    </div>
+    <div class="card">
+      <div id="historyStats" class="stats"></div>
+      <div class="table-wrap">
+        <table class="history-table">
+          <thead><tr><th>Date</th><th>Time</th><th>Student</th><th>Scholar</th><th>Roll</th><th>Class</th><th>Person Taking</th><th>Relation</th><th>Reason</th><th>Staff</th><th>Remarks</th></tr></thead>
+          <tbody id="historyBody"><tr><td colspan="11" class="muted">Use Search History to load records.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </section>
 </main>
 <footer>Mary Matha High School & Jr. College • MMHSJC</footer>
 
 <script>
-const CONFIG = {
-  // Put your deployed Google Apps Script Web App URL here.
-  API_URL: "https://script.google.com/macros/s/AKfycbySxQaiEbHCSK3Ocdxku2K2-NzdB85O5bNtKlVtrMl4O7cow1UI4A7hx4I2tX0SAKS6/exec"
-};
-let PIN="", students=[], selected=null, lists={relations:[],reasons:[]};
+const CONFIG={API_URL:"https://script.google.com/macros/s/AKfycbySxQaiEbHCSK3Ocdxku2K2-NzdB85O5bNtKlVtrMl4O7cow1UI4A7hx4I2tX0SAKS6/exec"};
+let PIN="",students=[],selected=null,lists={relations:[],reasons:[]},todayExits=[],historyExits=[];
 
-function api(action, params={}) {
-  return new Promise((resolve,reject)=>{
-    if(!CONFIG.API_URL || CONFIG.API_URL.includes("PASTE_")) return reject(new Error("Configure API_URL in app.js"));
-    const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
-    const s=document.createElement("script");
-    const q=new URLSearchParams({action,pin:PIN,callback:cb,...params});
-    s.src=CONFIG.API_URL+"?"+q.toString();
-    window[cb]=(data)=>{delete window[cb];s.remove();data.ok?resolve(data):reject(new Error(data.error||"Request failed"))};
-    s.onerror=()=>{delete window[cb];s.remove();reject(new Error("Could not connect to the school server."))};
-    document.body.appendChild(s);
-  });
+function api(action,params={}){
+ return new Promise((resolve,reject)=>{
+  const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+  const s=document.createElement("script");
+  const q=new URLSearchParams({action,pin:PIN,callback:cb,...params});
+  s.src=CONFIG.API_URL+"?"+q.toString();
+  window[cb]=(data)=>{delete window[cb];s.remove();data.ok?resolve(data):reject(new Error(data.error||"Request failed"))};
+  s.onerror=()=>{delete window[cb];s.remove();reject(new Error("Could not connect to the school server."))};
+  document.body.appendChild(s);
+ });
 }
 async function login(){
-  PIN=document.getElementById("pin").value.trim();
-  if(!PIN){msg("loginMsg","Enter PIN.","error");return}
-  try{
-    const d=await api("bootstrap");
-    students=d.students||[];lists=d.lists||{};
-    fillLists();fillClasses();document.getElementById("loginCard").classList.add("hidden");document.getElementById("app").classList.remove("hidden");
-    filterStudents();loadToday();
-    sessionStorage.setItem("mmhs_pin",PIN);
-  }catch(e){msg("loginMsg",e.message,"error")}
+ PIN=document.getElementById("pin").value.trim();
+ if(!PIN)return msg("loginMsg","Enter PIN.","error");
+ try{
+  const d=await api("bootstrap"); students=d.students||[]; lists=d.lists||{};
+  fillLists();fillClasses();
+  document.getElementById("loginCard").classList.add("hidden");document.getElementById("app").classList.remove("hidden");
+  document.getElementById("welcome").textContent="Staff";
+  filterStudents();loadToday();
+  sessionStorage.setItem("mmhs_pin",PIN);
+ }catch(e){msg("loginMsg",e.message,"error")}
 }
 function fillLists(){
-  const r=document.getElementById("relation"),rs=document.getElementById("reason");
-  r.innerHTML='<option value="">Select relation</option>'+lists.relations.map(x=>`<option>${esc(x)}</option>`).join("");
-  rs.innerHTML='<option value="">Select reason</option>'+lists.reasons.map(x=>`<option>${esc(x)}</option>`).join("");
+ const r=document.getElementById("relation"),rs=document.getElementById("reason");
+ r.innerHTML='<option value="">Select relation</option>'+lists.relations.map(x=>`<option>${esc(x)}</option>`).join("");
+ rs.innerHTML='<option value="">Select reason</option>'+lists.reasons.map(x=>`<option>${esc(x)}</option>`).join("");
+ document.getElementById("historyReason").innerHTML='<option value="">All Reasons</option>'+lists.reasons.map(x=>`<option>${esc(x)}</option>`).join("");
 }
 function fillClasses(){
-  const c=document.getElementById("classFilter"), vals=[...new Set(students.map(s=>s.classDivision).filter(Boolean))].sort();
-  c.innerHTML='<option value="">All Classes</option>'+vals.map(x=>`<option>${esc(x)}</option>`).join("");
+ const vals=[...new Set(students.map(s=>s.classDivision).filter(Boolean))].sort();
+ const html='<option value="">All Classes</option>'+vals.map(x=>`<option>${esc(x)}</option>`).join("");
+ document.getElementById("classFilter").innerHTML=html;
+ document.getElementById("historyClass").innerHTML=html;
 }
 function filterStudents(){
-  const q=document.getElementById("search").value.trim().toLowerCase(), cl=document.getElementById("classFilter").value;
-  const arr=students.filter(s=>(!cl||s.classDivision===cl)&&(!q||[s.name,s.scholarNo,s.rollNo,s.classDivision].join(" ").toLowerCase().includes(q))).slice(0,30);
-  document.getElementById("studentResults").innerHTML=arr.length?arr.map((s,i)=>`<div class="student" onclick="selectStudent(${students.indexOf(s)})"><strong>${esc(s.name)}</strong><span>Scholar: ${esc(s.scholarNo)} • Roll: ${esc(s.rollNo)} • ${esc(s.classDivision)}</span></div>`).join(""):'<p class="muted">No matching student.</p>';
+ const q=document.getElementById("search").value.trim().toLowerCase(),cl=document.getElementById("classFilter").value;
+ const arr=students.filter(s=>(!cl||s.classDivision===cl)&&(!q||[s.name,s.scholarNo,s.rollNo,s.classDivision].join(" ").toLowerCase().includes(q))).slice(0,30);
+ document.getElementById("studentResults").innerHTML=arr.length?arr.map(s=>`<div class="student" onclick="selectStudent(${students.indexOf(s)})"><strong>${esc(s.name)}</strong><span>Scholar: ${esc(s.scholarNo)} • Roll: ${esc(s.rollNo)} • ${esc(s.classDivision)}</span></div>`).join(""):'<p class="muted">No matching student.</p>';
 }
 function selectStudent(i){
-  selected=students[i];
-  document.getElementById("studentDetails").innerHTML=`
-    <div><b>Student</b><span>${esc(selected.name)}</span></div>
-    <div><b>Class</b><span>${esc(selected.classDivision)}</span></div>
-    <div><b>Scholar No.</b><span>${esc(selected.scholarNo)}</span></div>
-    <div><b>Roll No.</b><span>${esc(selected.rollNo)}</span></div>
-    <div><b>Parent</b><span>${esc(selected.parentName)}</span></div>
-    <div><b>Mobile</b><span>${esc(selected.parentMobile)}</span></div>`;
-  document.getElementById("selectedCard").classList.remove("hidden");document.getElementById("exitCard").classList.remove("hidden");
-  document.getElementById("selectedCard").scrollIntoView({behavior:"smooth"});
+ selected=students[i];
+ document.getElementById("studentDetails").innerHTML=`
+ <div><b>Student</b><span>${esc(selected.name)}</span></div>
+ <div><b>Class</b><span>${esc(selected.classDivision)}</span></div>
+ <div><b>Scholar No.</b><span>${esc(selected.scholarNo)}</span></div>
+ <div><b>Roll No.</b><span>${esc(selected.rollNo)}</span></div>
+ <div><b>Parent</b><span>${esc(selected.parentName)}</span></div>
+ <div><b>Mobile</b><span>${esc(selected.parentMobile)}</span></div>`;
+ document.getElementById("selectedCard").classList.remove("hidden");document.getElementById("exitCard").classList.remove("hidden");
+ document.getElementById("selectedCard").scrollIntoView({behavior:"smooth"});
 }
 function clearStudent(){selected=null;document.getElementById("selectedCard").classList.add("hidden");document.getElementById("exitCard").classList.add("hidden")}
 async function saveExit(){
-  if(!selected)return msg("saveMsg","Select a student first.","error");
-  const taking=document.getElementById("takingPerson").value.trim(), relation=document.getElementById("relation").value, reason=document.getElementById("reason").value, remarks=document.getElementById("remarks").value.trim(), staff=document.getElementById("staff").value.trim();
-  if(!taking||!relation||!reason||!staff)return msg("saveMsg","Please complete Person, Relation, Reason and Staff Name.","error");
-  const btn=document.getElementById("saveBtn");btn.disabled=true;btn.textContent="SAVING...";
-  try{
-    const payload={student:selected,takingPerson:taking,relation,reason,remarks,staff};
-    const d=await api("saveExit",{payload:JSON.stringify(payload)});
-    msg("saveMsg","✓ Early exit saved. Opening WhatsApp...","success");
-    if(d.whatsappUrl) window.location.href=d.whatsappUrl;
-    await loadToday();
-    document.getElementById("takingPerson").value="";document.getElementById("remarks").value="";
-  }catch(e){msg("saveMsg",e.message,"error")}
-  finally{btn.disabled=false;btn.textContent="SAVE & OPEN WHATSAPP"}
+ if(!selected)return msg("saveMsg","Select a student first.","error");
+ const taking=document.getElementById("takingPerson").value.trim().toUpperCase();
+ const relation=document.getElementById("relation").value,reason=document.getElementById("reason").value;
+ const remarks=document.getElementById("remarks").value.trim(),staff=document.getElementById("staff").value.trim().toUpperCase();
+ if(!taking||!relation||!reason||!staff)return msg("saveMsg","Please complete Person, Relation, Reason and Staff Name.","error");
+ const btn=document.getElementById("saveBtn");btn.disabled=true;btn.textContent="SAVING...";
+ try{
+  const payload={student:selected,takingPerson:taking,relation,reason,remarks,staff};
+  const d=await api("saveExit",{payload:JSON.stringify(payload)});
+  msg("saveMsg","✓ Early exit saved. Opening WhatsApp...","success");
+  if(d.whatsappUrl)window.location.href=d.whatsappUrl;
+  await loadToday();
+  document.getElementById("takingPerson").value="";document.getElementById("remarks").value="";
+ }catch(e){msg("saveMsg",e.message,"error")}
+ finally{btn.disabled=false;btn.textContent="SAVE & OPEN WHATSAPP"}
+}
+function showSection(which){
+ ["find","today","history"].forEach(x=>{
+  document.getElementById(x+"Section").classList.toggle("hidden",x!==which);
+  document.getElementById("nav"+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle("active",x===which);
+ });
+ if(which==="today")loadToday();
+ if(which==="history")fillHistoryStaff();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 async function loadToday(){
-  try{const d=await api("today");const a=d.exits||[];document.getElementById("todayList").innerHTML=a.length?a.slice(0,30).map(x=>`<div class="exit-item"><strong>${esc(x.studentName)} <span class="pill">${esc(x.classDivision)}</span></strong><small>${esc(x.time)} • ${esc(x.reason)} • Taken by ${esc(x.takingPerson)}</small></div>`).join(""):'No exits recorded today.'}catch(e){document.getElementById("todayList").textContent=e.message}
+ try{
+  const d=await api("today");todayExits=d.exits||[];
+  document.getElementById("todayStats").innerHTML=`<div class="stat"><b>${todayExits.length}</b><span>Total Early Exits Today</span></div><div class="stat"><b>${new Set(todayExits.map(x=>x.classDivision)).size}</b><span>Classes</span></div><div class="stat"><b>${new Set(todayExits.map(x=>x.staff)).size}</b><span>Staff</span></div>`;
+  document.getElementById("todayList").innerHTML=todayExits.length?todayExits.map(x=>`<div class="exit-item"><strong>${esc(x.studentName)} <span class="pill">${esc(x.classDivision)}</span></strong><small>${esc(x.time)} • ${esc(x.reason)} • Taken by ${esc(x.personTakingStudent)} • Staff: ${esc(x.staff)}</small></div>`).join(""):'No exits recorded today.';
+ }catch(e){document.getElementById("todayList").textContent=e.message}
+}
+function fillHistoryStaff(){
+ const vals=[...new Set(todayExits.map(x=>x.staff).filter(Boolean))].sort();
+ const current=document.getElementById("historyStaff").value;
+ document.getElementById("historyStaff").innerHTML='<option value="">All Staff</option>'+vals.map(x=>`<option>${esc(x)}</option>`).join("");
+ document.getElementById("historyStaff").value=current;
+}
+async function loadHistory(){
+ const p={fromDate:document.getElementById("fromDate").value,toDate:document.getElementById("toDate").value,classDivision:document.getElementById("historyClass").value,staff:document.getElementById("historyStaff").value,reason:document.getElementById("historyReason").value,search:document.getElementById("historySearch").value.trim()};
+ if(p.fromDate&&p.toDate&&p.fromDate>p.toDate)return msg("historyMsg","From Date cannot be after To Date.","error");
+ try{
+  const d=await api("history",p);historyExits=d.exits||[];renderHistory();
+  if(!historyExits.length)msg("historyMsg","No records found for the selected filters.","error");else msg("historyMsg",historyExits.length+" record(s) found.","success");
+ }catch(e){msg("historyMsg",e.message,"error")}
+}
+function renderHistory(){
+ document.getElementById("historyStats").innerHTML=`<div class="stat"><b>${historyExits.length}</b><span>Records</span></div><div class="stat"><b>${new Set(historyExits.map(x=>x.classDivision)).size}</b><span>Classes</span></div><div class="stat"><b>${new Set(historyExits.map(x=>x.staff)).size}</b><span>Staff</span></div>`;
+ document.getElementById("historyBody").innerHTML=historyExits.length?historyExits.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.time)}</td><td>${esc(x.studentName)}</td><td>${esc(x.scholarNo)}</td><td>${esc(x.rollNo)}</td><td>${esc(x.classDivision)}</td><td>${esc(x.personTakingStudent)}</td><td>${esc(x.relation)}</td><td>${esc(x.reason)}</td><td>${esc(x.staff)}</td><td>${esc(x.remarks||"-")}</td></tr>`).join(""):'<tr><td colspan="11">No records found.</td></tr>';
+}
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+function downloadExcel(){
+ if(!historyExits.length)return msg("historyMsg","Search history first.","error");
+ const headers=["Date","Time","Student Name","Scholar No.","Roll No.","Class/Division","Parent Name","Parent Mobile","Person Taking Student","Relation","Reason","Remarks","Staff"];
+ const rows=historyExits.map(x=>[x.date,x.time,x.studentName,x.scholarNo,x.rollNo,x.classDivision,x.parentName,x.parentMobile,x.personTakingStudent,x.relation,x.reason,x.remarks,x.staff]);
+ const csv="\uFEFF"+[headers,...rows].map(r=>r.map(csvCell).join(",")).join("\r\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="MMHSJC_Early_Exit_History.csv";a.click();URL.revokeObjectURL(a.href);
+}
+function printHistory(){
+ if(!historyExits.length)return msg("historyMsg","Search history first.","error");
+ const rows=historyExits.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.time)}</td><td>${esc(x.studentName)}</td><td>${esc(x.scholarNo)}</td><td>${esc(x.rollNo)}</td><td>${esc(x.classDivision)}</td><td>${esc(x.personTakingStudent)}</td><td>${esc(x.relation)}</td><td>${esc(x.reason)}</td><td>${esc(x.staff)}</td><td>${esc(x.remarks||"-")}</td></tr>`).join("");
+ const w=window.open("","_blank");
+ w.document.write(`<html><head><title>MMHSJC Early Exit History</title><style>body{font-family:Arial;padding:20px}h1{color:#122051}table{width:100%;border-collapse:collapse;font-size:10px}th,td{border:1px solid #ccc;padding:5px;text-align:left}th{background:#eef1f7}@media print{button{display:none}}</style></head><body><h1>MMHSJC - EARLY EXIT HISTORY</h1><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr><th>Date</th><th>Time</th><th>Student</th><th>Scholar</th><th>Roll</th><th>Class</th><th>Person Taking</th><th>Relation</th><th>Reason</th><th>Staff</th><th>Remarks</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=function(){window.print()}<\/script></body></html>`);
+ w.document.close();
 }
 function logout(){sessionStorage.removeItem("mmhs_pin");PIN="";location.reload()}
 function msg(id,t,type){document.getElementById(id).innerHTML=`<div class="alert ${type}">${esc(t)}</div>`}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 window.addEventListener("load",()=>{const p=sessionStorage.getItem("mmhs_pin");if(p){document.getElementById("pin").value=p;login()}});
-if("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});
 </script>
 </body>
 </html>
